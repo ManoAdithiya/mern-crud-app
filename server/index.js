@@ -4,10 +4,7 @@ const cors = require("cors");
 const User = require("./models/Users");
 
 const app = express();
-
-app.use(cors({
-  origin: "vercel.com/…no-adithyas-projects/mern-crud-frontend"
-}));
+app.use(cors());
 app.use(express.json());
 
 mongoose
