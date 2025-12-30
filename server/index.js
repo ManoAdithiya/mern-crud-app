@@ -5,22 +5,19 @@ const User = require("./models/Users");
 require("dotenv").config();
 
 const app = express();
-const allowedOrigins = [
-  process.env.FRONTEND_URL,
-  process.env.FRONTEND_URL_2,
-  "http://localhost:3000" // for local testing
-];
+
+const allowedOrigins = process.env.FRONTEND_URLS?.split(",") || [];
 
 app.use(cors({
-  origin: function(origin, callback){
-    if(!origin) return callback(null, true); // allow tools like Postman
-    if(allowedOrigins.indexOf(origin) === -1){
-      const msg = "The CORS policy for this site does not allow access from the specified Origin.";
-      return callback(new Error(msg), false);
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
     }
-    return callback(null, true);
+    callback(new Error("CORS blocked"));
   }
 }));
+
 
 app.use(express.json());
 
