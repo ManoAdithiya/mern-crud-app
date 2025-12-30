@@ -6,17 +6,18 @@ require("dotenv").config();
 
 const app = express();
 
-const allowedOrigins = process.env.FRONTEND_URLS?.split(",") || [];
+const allowedOrigins = process.env.FRONTEND_URLS.split(",");
 
 app.use(cors({
   origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      return callback(null, true);
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked"));
     }
-    callback(new Error("CORS blocked"));
   }
 }));
+
 
 
 app.use(express.json());
