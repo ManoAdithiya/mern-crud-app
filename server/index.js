@@ -27,11 +27,16 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-app.get("/", (req, res) => {
-  User.find({})
-    .then((users) => res.json(users))
-    .catch((err) => res.json(err));
+app.get("/", async (req, res) => {
+  try {
+    const users = await User.find({});
+    res.status(200).json(users); // MUST be array
+  } catch (error) {
+    console.error("Fetch users error:", error);
+    res.status(500).json([]); // ALWAYS array
+  }
 });
+
 
 app.get("/getUser/:id", (req, res) => {
   const id = req.params.id;
