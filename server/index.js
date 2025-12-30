@@ -2,14 +2,12 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const User = require("./models/Users");
+require("dotenv").config();
 
 const app = express();
 app.use(
   cors({
-    origin: [
-      // "http://localhost:5173",       // local dev
-      "https://mern-crud-45lvuh9iv-mano-adithyas-projects.vercel.app" // production frontend 
-    ],
+    origin: process.env.FRONTEND_URL,
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true
   })
@@ -17,7 +15,7 @@ app.use(
 app.use(express.json());
 
 mongoose
-  .connect("mongodb+srv://manoadithiya2002e_db_user:mano1005@cluster0.tzpprzl.mongodb.net/")
+  .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
@@ -34,12 +32,13 @@ app.get("/getUser/:id", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.delete('/deleteUser/:id',(req,res)=>{
-  const id=req.params.id
-  User.findByIdAndDelete({_id:id})
-  .then(res=>res.json(res))
-  .catch(err=>res.json(err))
-})
+app.delete("/deleteUser/:id", (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndDelete(id)
+    .then((result) => res.json(result))
+    .catch((err) => res.status(500).json(err));
+});
+
 
 app.put("/updateUser/:id", (req, res) => {
   const id = req.params.id;
@@ -68,6 +67,7 @@ app.post("/createUser", async (req, res) => {
   }
 });
 
-app.listen(3001, () => {
-  console.log("Server is Running on port 3001.");
-});
+const PORT = process.env.PORT || 3001;
+app.listen(PORT, () =>
+  console.log(`Server running on port ${PORT}`)
+);
