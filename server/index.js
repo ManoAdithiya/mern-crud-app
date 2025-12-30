@@ -4,7 +4,16 @@ const cors = require("cors");
 const User = require("./models/Users");
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",       // local dev
+      "https://mern-crud-45lvuh9iv-mano-adithyas-projects.vercel.app" // production frontend 
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true
+  })
+);
 app.use(express.json());
 
 mongoose
