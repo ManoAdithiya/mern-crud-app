@@ -12,7 +12,7 @@ function UpdateUsers() {
 
   useEffect(() => {
     axios
-      .get("https://mern-crud-backend-q1xl.onrender.com/getUser/" + id)
+      .get("https://mern-crud-app-backend-4fncrz9ps-mano-adithyas-projects.vercel.app/getUser/" + id)
       .then((result) => {
         console.log(result);
         setName(result.data.name);
@@ -25,7 +25,7 @@ function UpdateUsers() {
    const Update = (e) => {
     e.preventDefault();
     axios
-      .put("https://mern-crud-backend-q1xl.onrender.com/updateUser/"+id, { name, email, age })
+      .put("https://mern-crud-app-backend-4fncrz9ps-mano-adithyas-projects.vercel.app/updateUser/"+id, { name, email, age })
       .then((result) => {
         console.log(result)
     navigate('/')})

@@ -13,7 +13,7 @@ function CreateUsers() {
   const Submit = (e) => {
     e.preventDefault();
     axios
-      .post("https://mern-crud-backend-q1xl.onrender.com/createUser", { name, email, age })
+      .post("https://mern-crud-app-backend-4fncrz9ps-mano-adithyas-projects.vercel.app/createUser", { name, email, age })
       .then((result) => {
         console.log(result)
     navigate('/')})
