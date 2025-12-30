@@ -6,6 +6,12 @@ require("dotenv").config();
 
 const app = express();
 
+app.use(cors({
+  origin: "https://mern-crud-app-delta-mocha.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
+
 const allowedOrigins = process.env.FRONTEND_URLS.split(",");
 
 app.use(cors({
