@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const app = express();
 
-app.use("/api/users", userRoutes);
+
 
 app.use(cors({
   origin: "https://mern-crud-app-delta-mocha.vercel.app",
