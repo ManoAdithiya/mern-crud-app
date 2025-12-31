@@ -6,42 +6,57 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin) return callback(null, true);
-
-    // allow all Vercel deployments
-    if (
-      origin === process.env.FRONTEND_URL ||
-      origin.endsWith(".vercel.app")
-    ) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS blocked"));
-    }
-  },
-  methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+// Improved CORS to handle your Vercel frontend
+app.use(
+  cors({
+    origin: [
+      process.env.FRONTEND_URL,
+      "https://mern-crud-frontend-plum.vercel.app",
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
-app.get("/", async (req, res) => {
-  const users = await User.find();
-  res.json(users);
+// 1. Get All Users
+app.get("/users", async (req, res) => {
+  try {
+    const users = await User.find();
+    res.json(users);
+  } catch (err) {
+    res.status(500).json(err);
+  }
 });
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.log(err));
-
+// 2. Get Single User (for Update page)
 app.get("/getUser/:id", (req, res) => {
   const id = req.params.id;
-  User.findById({ _id: id })
-    .then((users) => res.json(users))
-    .catch((err) => res.json(err));
+  User.findById(id)
+    .then((user) => res.json(user))
+    .catch((err) => res.status(404).json(err));
 });
 
+// 3. Create User - Changed to /create to match your CreateUser.jsx
+app.post("/create", async (req, res) => {
+  try {
+    const user = await User.create(req.body);
+    res.status(201).json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// 4. Update User
+app.put("/updateUser/:id", (req, res) => {
+  const id = req.params.id;
+  User.findByIdAndUpdate(id, req.body, { new: true })
+    .then((user) => res.json(user))
+    .catch((err) => res.status(500).json(err));
+});
+
+// 5. Delete User
 app.delete("/deleteUser/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndDelete(id)
@@ -49,32 +64,10 @@ app.delete("/deleteUser/:id", (req, res) => {
     .catch((err) => res.status(500).json(err));
 });
 
-app.put("/updateUser/:id", (req, res) => {
-  const id = req.params.id;
-  User.findByIdAndUpdate(
-    { _id: id },
-    { name: req.body.name, email: req.body.email, age: req.body.age }
-  )
-    .then((users) => res.json(users))
-    .catch((err) => res.json(err));
-});
-
-app.post("/createUser", async (req, res) => {
-  try {
-    console.log(req.body); // 👈 DEBUG LINE
-
-    const user = await User.create({
-      name: req.body.name,
-      email: req.body.email,
-      age: req.body.age,
-    });
-
-    res.status(201).json(user);
-  } catch (error) {
-    console.error("CreateUser Error:", error);
-    res.status(500).json({ error: error.message });
-  }
-});
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch((err) => console.error(err));
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
