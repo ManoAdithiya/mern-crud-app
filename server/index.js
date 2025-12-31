@@ -6,12 +6,22 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: ["mern-crud-app-delta-mocha.vercel.app"],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-  })
-);
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin) return callback(null, true);
+
+    // allow all Vercel deployments
+    if (
+      origin === process.env.FRONTEND_URL ||
+      origin.endsWith(".vercel.app")
+    ) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS blocked"));
+    }
+  },
+  methods: ["GET", "POST", "PUT", "DELETE"],
+}));
 
 app.use(express.json());
 
