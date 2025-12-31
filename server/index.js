@@ -6,13 +6,12 @@ require("dotenv").config();
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "https://mern-crud-o7k73fgop-mano-adithyas-projects.vercel.app",
-    "https://mern-crud-iz5aktlj3-mano-adithyas-projects.vercel.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-}));
+app.use(
+  cors({
+    origin: ["mern-crud-app-delta-mocha.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  })
+);
 
 app.use(express.json());
 
@@ -38,7 +37,6 @@ app.delete("/deleteUser/:id", (req, res) => {
     .then((result) => res.json(result))
     .catch((err) => res.status(500).json(err));
 });
-
 
 app.put("/updateUser/:id", (req, res) => {
   const id = req.params.id;
@@ -69,4 +67,3 @@ app.post("/createUser", async (req, res) => {
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
