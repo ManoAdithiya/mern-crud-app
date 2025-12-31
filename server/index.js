@@ -34,21 +34,21 @@ mongoose
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
 
-app.get("/getUser/:id", (req, res) => {
+app.get("/api/getUser/:id", (req, res) => {
   const id = req.params.id;
   User.findById({ _id: id })
     .then((users) => res.json(users))
     .catch((err) => res.json(err));
 });
 
-app.delete("/deleteUser/:id", (req, res) => {
+app.delete("/api/deleteUser/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndDelete(id)
     .then((result) => res.json(result))
     .catch((err) => res.status(500).json(err));
 });
 
-app.put("/updateUser/:id", (req, res) => {
+app.put("/api/updateUser/:id", (req, res) => {
   const id = req.params.id;
   User.findByIdAndUpdate(
     { _id: id },
@@ -58,7 +58,7 @@ app.put("/updateUser/:id", (req, res) => {
     .catch((err) => res.json(err));
 });
 
-app.post("/createUser", async (req, res) => {
+app.post("/api/createUser", async (req, res) => {
   try {
     console.log(req.body); // 👈 DEBUG LINE
 
