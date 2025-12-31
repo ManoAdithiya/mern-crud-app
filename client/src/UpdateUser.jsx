@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
-const API = "https://mern-crud-backend-q1xl.onrender.com/api/users";
+const API = "https://mern-crud-backend-q1xl.onrender.com/updateUser/:id";
 
 
 function UpdateUsers() {

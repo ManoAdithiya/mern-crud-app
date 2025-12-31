@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API = "https://mern-crud-backend-q1xl.onrender.com/api/users";
+const API = "https://mern-crud-backend-q1xl.onrender.com/";
 
 
 function Users() {
@@ -17,7 +17,7 @@ function Users() {
 
   const handleDelete = (id) => {
     axios
-      .delete("https://mern-crud-backend-q1xl.onrender.com/deleteUser/" + id)
+      .delete("https://mern-crud-backend-q1xl.onrender.com/deleteUser/:id" + id)
       .then((res) => {
         console.log(res);
         window.location.reload();
