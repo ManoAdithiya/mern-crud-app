@@ -6,10 +6,8 @@ require("dotenv").config();
 
 const app = express();
 
-
-
 app.use(cors({
-  origin: "https://mern-crud-app-delta-mocha.vercel.app",
+  origin: "mern-crud-o7k73fgop-mano-adithyas-projects.vercel.app",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
   credentials: true
