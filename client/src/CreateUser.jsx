@@ -10,10 +10,13 @@ function CreateUsers() {
   const [age, setAge] = useState();
   const navigate=useNavigate()
 
+  const API = "https://mern-crud-backend-q1xl.onrender.com/api/users";
+
+
   const Submit = (e) => {
     e.preventDefault();
     axios
-      .post("https://mern-crud-backend-q1xl.onrender.com/createUser", { name, email, age })
+      .post(API, { name, email, age })
       .then((result) => {
         console.log(result)
     navigate('/')})

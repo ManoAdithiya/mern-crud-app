@@ -7,41 +7,23 @@ require("dotenv").config();
 const app = express();
 
 app.use(cors({
-  origin: "mern-crud-o7k73fgop-mano-adithyas-projects.vercel.app",
+  origin: [
+    "https://mern-crud-o7k73fgop-mano-adithyas-projects.vercel.app",
+    "https://mern-crud-iz5aktlj3-mano-adithyas-projects.vercel.app"
+  ],
   methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-  credentials: true
-}));
-
-const allowedOrigins = process.env.FRONTEND_URLS.split(",");
-
-app.use(cors({
-  origin: (origin, callback) => {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("CORS blocked"));
-    }
-  }
 }));
 
 app.use(express.json());
+
+app.get("/", (req, res) => {
+  res.send("API running");
+});
 
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected"))
   .catch((err) => console.log(err));
-
-app.get("/", async (req, res) => {
-  try {
-    const users = await User.find({});
-    res.status(200).json(users); // MUST be array
-  } catch (error) {
-    console.error("Fetch users error:", error);
-    res.status(500).json([]); // ALWAYS array
-  }
-});
-
 
 app.get("/getUser/:id", (req, res) => {
   const id = req.params.id;

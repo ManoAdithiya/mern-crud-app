@@ -3,6 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
+const API = "https://mern-crud-backend-q1xl.onrender.com/api/users";
+
+
 function UpdateUsers() {
   const { id } = useParams();
   const [name, setName] = useState();
@@ -12,7 +15,7 @@ function UpdateUsers() {
 
   useEffect(() => {
     axios
-      .get("https://mern-crud-backend-q1xl.onrender.com/getUser/" + id)
+      .get(API + id)
       .then((result) => {
         console.log(result);
         setName(result.data.name);
@@ -25,7 +28,7 @@ function UpdateUsers() {
    const Update = (e) => {
     e.preventDefault();
     axios
-      .put("https://mern-crud-backend-q1xl.onrender.com/updateUser/"+id, { name, email, age })
+      .put(API+id, { name, email, age })
       .then((result) => {
         console.log(result)
     navigate('/')})
