@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API = "https://mern-crud-backend-q1xl.onrender.com/";
+// const API = "https://mern-crud-backend-q1xl.onrender.com/";
 
 
 function Users() {
@@ -10,7 +10,7 @@ function Users() {
 
   useEffect(() => {
     axios
-      .get(API)
+      .get("https://mern-crud-backend-q1xl.onrender.com/")
       .then((result) => setUsers(result.data))
       .catch((err) => console.log(err));
   }, []);
