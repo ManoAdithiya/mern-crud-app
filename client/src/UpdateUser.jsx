@@ -14,7 +14,7 @@ function UpdateUsers() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get(`${BASE}/getUser/${id}`).then((res) => {
+    axios.get(`${BASE}/api/getUser/${id}`).then((res) => {
       setName(res.data.name);
       setEmail(res.data.email);
       setAge(res.data.age);
@@ -24,7 +24,7 @@ function UpdateUsers() {
   const Update = (e) => {
     e.preventDefault();
     axios
-      .put(`${BASE}/updateUser/${id}`, { name, email, age })
+      .put(`${BASE}/api/updateUser/${id}`, { name, email, age })
       .then(() => navigate("/"));
   };
 

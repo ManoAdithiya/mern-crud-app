@@ -9,7 +9,6 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    // Calling the route we just fixed in the backend
     axios
       .get(API_URL)
       .then((result) => setUsers(result.data))
@@ -18,7 +17,7 @@ function Users() {
 
   const handleDelete = (id) => {
     axios
-      .delete(`https://mern-crud-backend-q1xl.onrender.com/deleteUser/${id}`)
+      .delete(`https://mern-crud-backend-q1xl.onrender.com/api/deleteUser/${id}`)
       .then(() => {
         // Update state locally so the user disappears immediately
         setUsers(users.filter((u) => u._id !== id));
