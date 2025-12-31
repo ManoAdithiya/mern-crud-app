@@ -2,30 +2,32 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-const API_BASE = "https://mern-crud-backend-q1xl.onrender.com";
+// Standardize the API Base URL
+const API_URL = "https://mern-crud-backend-q1xl.onrender.com/api/users";
 
 function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
+    // Calling the route we just fixed in the backend
     axios
-      .get(`${API_BASE}/users`)
+      .get(API_URL)
       .then((result) => setUsers(result.data))
-      .catch((err) => console.log(err));
+      .catch((err) => console.error("Frontend Error:", err));
   }, []);
 
   const handleDelete = (id) => {
     axios
-      .delete(`${API_BASE}/deleteUser/${id}`)
+      .delete(`https://mern-crud-backend-q1xl.onrender.com/deleteUser/${id}`)
       .then(() => {
-        // Remove the user from UI without reloading the page
-        setUsers(users.filter((user) => user._id !== id));
+        // Update state locally so the user disappears immediately
+        setUsers(users.filter((u) => u._id !== id));
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center ">
+    <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
       <div className="w-75 bg-white rounded p-3">
         <Link to="/create" className="btn btn-success mb-2">
           Add +
@@ -53,8 +55,8 @@ function Users() {
                     Update
                   </Link>
                   <button
-                    className="btn btn-sm btn-danger"
                     onClick={() => handleDelete(user._id)}
+                    className="btn btn-sm btn-danger"
                   >
                     Delete
                   </button>
