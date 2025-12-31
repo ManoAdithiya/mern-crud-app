@@ -10,7 +10,7 @@ function CreateUsers() {
   const [age, setAge] = useState();
   const navigate=useNavigate()
 
-  const API = "https://mern-crud-backend-q1xl.onrender.com/updateUser";
+  const API = "https://mern-crud-backend-q1xl.onrender.com/create";
 
 
   const Submit = (e) => {

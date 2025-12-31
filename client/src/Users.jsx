@@ -17,7 +17,7 @@ function Users() {
 
   const handleDelete = (id) => {
     axios
-      .delete("https://mern-crud-backend-q1xl.onrender.com/deleteUser/:id" + id)
+      .delete("https://mern-crud-backend-q1xl.onrender.com/delete/:id" + id)
       .then((res) => {
         console.log(res);
         window.location.reload();
