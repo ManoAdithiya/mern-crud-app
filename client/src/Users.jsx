@@ -10,7 +10,7 @@ function Users() {
 
   useEffect(() => {
     axios
-      .get("https://mern-crud-backend-q1xl.onrender.com/")
+      .get("https://mern-crud-backend-q1xl.onrender.com")
       .then((result) => setUsers(result.data))
       .catch((err) => console.log(err));
   }, []);
