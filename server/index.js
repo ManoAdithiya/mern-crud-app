@@ -40,14 +40,41 @@ app.get("/api/users", async (req, res) => {
   }
 });
 
-
 app.get("/", (req, res) => res.send("Server is running"));
 
-
-app.post("/create", async (req, res) => {
+app.post("/api/create", async (req, res) => {
   try {
     const user = await User.create(req.body);
     res.status(201).json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.get("/api/getUser/:id", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.put("/api/updateUser/:id", async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+app.delete("/api/deleteUser/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User Deleted" });
   } catch (err) {
     res.status(500).json(err);
   }
