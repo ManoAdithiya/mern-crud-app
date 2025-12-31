@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const API = "https://mern-crud-backend-q1xl.onrender.com/update/:id";
-
+const BASE = "https://mern-crud-backend-q1xl.onrender.com";
 
 function UpdateUsers() {
   const { id } = useParams();
@@ -14,28 +14,20 @@ function UpdateUsers() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get(API + id)
-      .then((result) => {
-        console.log(result);
-        setName(result.data.name);
-        setEmail(result.data.email);
-        setAge(result.data.age);
-      })
-      .catch((err) => console.log(err));
-  });
+    axios.get(`${BASE}/getUser/${id}`).then((res) => {
+      setName(res.data.name);
+      setEmail(res.data.email);
+      setAge(res.data.age);
+    });
+  }, [id]);
 
-   const Update = (e) => {
+  const Update = (e) => {
     e.preventDefault();
     axios
-      .put(API+id, { name, email, age })
-      .then((result) => {
-        console.log(result)
-    navigate('/')})
-      .catch((err) => console.log(err));
+      .put(`${BASE}/updateUser/${id}`, { name, email, age })
+      .then(() => navigate("/"));
   };
 
-  
   return (
     <div className="d-flex vh-100 bg-primary justify-content-center align-items-center">
       <div className="w-50 bg-white rounded p-3">

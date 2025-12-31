@@ -25,8 +25,9 @@ app.use(cors({
 
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  res.send("API running");
+app.get("/", async (req, res) => {
+  const users = await User.find();
+  res.json(users);
 });
 
 mongoose

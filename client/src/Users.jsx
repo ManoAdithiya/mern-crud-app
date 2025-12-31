@@ -4,25 +4,22 @@ import { Link } from "react-router-dom";
 
 // const API = "https://mern-crud-backend-q1xl.onrender.com/";
 
-
 function Users() {
   const [users, setUsers] = useState([]);
 
+  // axios.get("https://mern-crud-backend-q1xl.onrender.com/users")
+
   useEffect(() => {
     axios
-      .get("https://mern-crud-backend-q1xl.onrender.com/")
+      .get("https://mern-crud-backend-q1xl.onrender.com/users")
       .then((result) => setUsers(result.data))
       .catch((err) => console.log(err));
   }, []);
 
   const handleDelete = (id) => {
-    axios
-      .delete("https://mern-crud-backend-q1xl.onrender.com/delete/:id" + id)
-      .then((res) => {
-        console.log(res);
-        window.location.reload();
-      })
-      .catch((err) => console.log(err));
+    axios.delete(
+      `https://mern-crud-backend-q1xl.onrender.com/deleteUser/${id}`
+    );
   };
 
   return (
